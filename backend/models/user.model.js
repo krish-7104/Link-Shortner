@@ -1,25 +1,23 @@
 import mongoose, { Schema } from "mongoose"
 import bcrypt from "bcrypt"
 
-const UserSchema = Schema({
+const UserSchema = new Schema({
     email: {
         type: String,
         required: [true, "Email is required!"],
-        unique: [true, "Email already exists!"]
+        unique: [true, "Email already exists!"],
+        lowercase: true,
+        trim: true,
     },
     password: {
         type: String,
-        required: [true, "Password is required!"]
-    },
-    verified: {
-        type: Boolean,
-        default: false
+        required: [true, "Password is required!"],
+        minlength: 6,
     },
     resetToken: {
         type: String,
-    }
-})
-
+    },
+}, { timestamps: true })
 
 UserSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next()
@@ -31,5 +29,4 @@ UserSchema.methods.isPasswordCorrect = async function (password) {
     return await bcrypt.compare(password, this.password)
 }
 
-
-export default mongoose.model("user", UserSchema)
+export default mongoose.model("User", UserSchema)
