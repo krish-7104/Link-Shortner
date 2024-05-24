@@ -20,9 +20,6 @@ export const GetAllLinksHandler = async (req, res) => {
     try {
         const { userId } = req.params;
         const links = await Link.find({ user: userId });
-        if (!links || links.length === 0) {
-            return res.status(404).json(new ApiResponse(404, {}, "Links Not Found!"));
-        }
         res.status(200).json(new ApiResponse(200, links, "Links Found!"));
     } catch (error) {
         res.status(500).json(new ApiResponse(500, null, error.message));
@@ -55,7 +52,7 @@ export const AddLinkHandler = async (req, res) => {
     try {
         const { user, url } = req.body;
         const title = await FetchTiteFromLink(url)
-        const newLink = new Link({ user, url, uniqueId: generateUniqueId(), title });
+        const newLink = new Link({ user, url, uniqueId: generateUniqueId(), title, longurl: url });
         await newLink.save();
         res.status(201).json(new ApiResponse(201, newLink, "Link Created!"));
     } catch (error) {

@@ -5,6 +5,8 @@ import { UserContext } from "../../context/user-context";
 import axios from "axios";
 import { BACKEND_LINK } from "../../utils/base-api.js";
 import { IoClose } from "react-icons/io5";
+import { MdNavigateNext } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [link, setLink] = useState("");
@@ -90,6 +92,16 @@ const Home = () => {
             </p>
             <LuLink className="text-emerald-500" />
           </div>
+        </div>
+      )}
+      {link && response && (
+        <div>
+          <Link
+            to={"/dashboard"}
+            className="bg-emerald-500 text-[#191e24] px-2 py-2 rounded-lg font-medium mt-4 flex justify-center items-center"
+          >
+            Go To Dashboard <MdNavigateNext size={24} className="ml-1" />
+          </Link>
         </div>
       )}
       <footer className=" absolute bottom-3">

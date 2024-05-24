@@ -5,6 +5,10 @@ const LinkSchema = new Schema({
         type: String,
         required: [true, "Title is Required"]
     },
+    longurl: {
+        type: String,
+        required: [true, "URL is Required"]
+    },
     uniqueId: {
         type: String,
         required: [true, "uniqueId is Required"],
