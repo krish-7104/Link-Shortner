@@ -28,7 +28,7 @@ const Layout = () => {
     if (location.pathname.includes("/login")) return true;
     if (location.pathname.includes("/register")) return true;
     if (location.pathname.includes("/dashboard")) return true;
-    if (location.pathname.includes("/forget-passwords")) return true;
+    if (location.pathname.includes("/forget-password")) return true;
     if (location.pathname.includes("/verify-token")) return true;
     if (location.pathname === "/") return true;
   };

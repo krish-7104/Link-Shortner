@@ -31,7 +31,7 @@ const App = () => {
           element: <ForgetPassword />,
         },
         {
-          path: "/update-password",
+          path: "/verify-token",
           element: <UpdatePassword />,
         },
         {

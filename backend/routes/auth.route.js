@@ -1,12 +1,13 @@
 import express from "express"
-import { ForgetPasswordHandler, GetUserHandler, LoginHandler, RegisterHandler, UpdatePasswordHandler } from "../controllers/auth.controller.js"
+import { ForgetPasswordHandler, GetUserHandler, LoginHandler, LogoutHandler, RegisterHandler, UpdatePasswordHandler } from "../controllers/auth.controller.js"
 
 const router = express.Router()
 
 router.post("/login", LoginHandler)
 router.post("/register", RegisterHandler)
 router.post("/forget-password", ForgetPasswordHandler)
-router.post("/verify-token/:id", UpdatePasswordHandler)
+router.post("/verify-token", UpdatePasswordHandler)
 router.post("/get-user", GetUserHandler)
+router.post("/logout", LogoutHandler)
 
 export default router

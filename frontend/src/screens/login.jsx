@@ -65,6 +65,9 @@ const Login = () => {
             onChange={(e) => setData({ ...data, password: e.target.value })}
           />
         </div>
+        <div className="w-full flex justify-end text-white/50 my-2">
+          <Link to={"/forget-password"}>Forget Password?</Link>
+        </div>
         <button
           className="bg-emerald-500 px-4 py-2 rounded-md font-medium text-[#191e24] mt-2"
           type="submit"

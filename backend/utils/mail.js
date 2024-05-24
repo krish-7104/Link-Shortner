@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer"
 
-export const sendMail = async (to, subject, text) => {
+export const sendMail = async (to, token) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -10,11 +10,11 @@ export const sendMail = async (to, subject, text) => {
     })
 
     const mailOptions = {
-        from: process.env.EMAIL,
+        from: `Linkify ${process.env.NODEMAILER_USER}`,
         to,
-        subject,
-        text,
-    }
+        subject: 'Password Reset',
+        text: `Reset your password by clicking on the following link: ${process.env.FRONTEND_LINK}/verify-token?token=${token}`
+    };
 
     await transporter.sendMail(mailOptions)
 }

@@ -14,8 +14,9 @@ const UserSchema = new Schema({
         required: [true, "Password is required!"],
         minlength: 6,
     },
-    resetToken: {
+    name: {
         type: String,
+        required: [true, "Name is required!"],
     },
 }, { timestamps: true })
 

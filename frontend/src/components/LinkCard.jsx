@@ -7,6 +7,11 @@ import { BACKEND_LINK } from "../../utils/base-api";
 
 const LinkCard = ({ uniqueId, longurl, clicks, setFlag }) => {
   const deleteHandler = async () => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this link?"
+    );
+    if (!isConfirmed) return;
+
     try {
       toast.loading("Deleting..");
       const resp = await axios.delete(
@@ -22,6 +27,7 @@ const LinkCard = ({ uniqueId, longurl, clicks, setFlag }) => {
       console.log("Delete Error\n", error);
     }
   };
+
   return (
     <div className="w-[90%] mx-auto flex justify-between items-center border p-4 rounded-lg mb-4">
       <div className="flex flex-col">
