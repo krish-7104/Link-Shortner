@@ -21,7 +21,8 @@ const Register = () => {
       const resp = await axios.post(`${BACKEND_LINK}/auth/register`, data);
       toast.dismiss();
       toast.success(resp.data.message);
-      navigate("/login");
+      setUser(resp.data.data);
+      navigate("/");
     } catch (error) {
       toast.dismiss();
       if (error.response) toast.error(error.response?.data?.message);

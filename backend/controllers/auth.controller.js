@@ -4,14 +4,14 @@ import jwt from "jsonwebtoken"
 import ApiResponse from "../utils/ApiResponse.js"
 
 const generateToken = (user) => {
-    return jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
+    return jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' })
 }
 
 export const RegisterHandler = async (req, res) => {
     try {
         const user = await User.create(req.body)
         const token = generateToken(user)
-        res.cookie('token', token, { httpOnly: true })
+        res.cookie('token', token, { httpOnly: false, maxAge: 7 * 24 * 60 * 60 * 1000 })
         res.status(201).json(new ApiResponse(201, user, "User registered successfully"))
     } catch (error) {
         res.status(500).json(new ApiResponse(500, null, error.message))
@@ -26,7 +26,7 @@ export const LoginHandler = async (req, res) => {
             return res.status(401).json(new ApiResponse(401, null, "Invalid credentials"))
         }
         const token = generateToken(user)
-        res.cookie('token', token, { httpOnly: false })
+        res.cookie('token', token, { httpOnly: false, maxAge: 7 * 24 * 60 * 60 * 1000 })
         const data = { _id: user._id, email: user.email, createdAt: user.createdAt, updatedAt: user.updatedAt }
         res.status(200).json(new ApiResponse(200, data, "Login successful"))
     } catch (error) {

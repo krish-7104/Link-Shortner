@@ -26,6 +26,13 @@ const Navbar = () => {
             Login
           </Link>
         )}
+      <p className="text-emerald-500 font-medium px-3 py-2 rounded-lg">
+        {location.pathname.includes("/login") && "Login"}
+        {location.pathname.includes("/register") && "Register"}
+        {location.pathname.includes("/forget-password") && "Forget Password"}
+        {location.pathname.includes("/verify-token") && "Update Password"}
+        {location.pathname.includes("/dashboard") && "Dashboard"}
+      </p>
       {user && user.email && location.pathname !== "/dashboard" && (
         <Link
           to={"/dashboard"}
@@ -34,16 +41,6 @@ const Navbar = () => {
           Dashboard
         </Link>
       )}
-      {/* <p className="text-emerald-500 font-medium px-3 py-2 rounded-lg">
-        {location.pathname.includes("/login") && "Login"}
-        {location.pathname.includes("/register") && "Register"}
-        {location.pathname.includes("/forget-password") && "Forget Password"}
-        {location.pathname.includes("/verify-token") && "Update Password"}
-        {location.pathname.includes("/dashboard") && "Dashboard"}
-        {location.pathname.includes("/") && (
-          <Link to={"/dashboard"}>Dashboard</Link>
-        )}
-      </p> */}
     </div>
   );
 };
