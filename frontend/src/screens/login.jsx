@@ -17,7 +17,9 @@ const Login = () => {
     e.preventDefault();
     toast.loading("Processing...");
     try {
-      const resp = await axios.post(`${BACKEND_LINK}/auth/login`, data);
+      const resp = await axios.post(`${BACKEND_LINK}/auth/login`, data, {
+        withCredentials: true,
+      });
       toast.dismiss();
       toast.success(resp.data.message);
       setUser(resp.data.data);

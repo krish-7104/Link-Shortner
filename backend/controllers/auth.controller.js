@@ -26,9 +26,9 @@ export const LoginHandler = async (req, res) => {
             return res.status(401).json(new ApiResponse(401, null, "Invalid credentials"))
         }
         const token = generateToken(user)
-        res.cookie('token', token, { httpOnly: true })
-        const data = { _id: user._id, email: user.email }
-        res.status(200).json(new ApiResponse(200, user, "Login successful"))
+        res.cookie('token', token, { httpOnly: false })
+        const data = { _id: user._id, email: user.email, createdAt: user.createdAt, updatedAt: user.updatedAt }
+        res.status(200).json(new ApiResponse(200, data, "Login successful"))
     } catch (error) {
         res.status(500).json(new ApiResponse(500, null, error.message))
     }
@@ -36,17 +36,27 @@ export const LoginHandler = async (req, res) => {
 
 export const GetUserHandler = async (req, res) => {
     try {
-        const token = req.cookies.token
-        if (!token) {
-            return res.status(401).json(new ApiResponse(401, null, "Unauthorized"))
+        const authorizationHeader = req.headers.authorization;
+        if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
+            return res.status(401).json(new ApiResponse(401, null, "Unauthorized: Missing or invalid token"));
         }
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        const user = await User.findById(decoded.id)
-        res.status(200).json(new ApiResponse(200, user, "User retrieved successfully"))
+        const token = authorizationHeader.split(' ')[1]
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const user = await User.findById(decoded.id);
+            if (!user) {
+                return res.status(404).json(new ApiResponse(404, null, "User not found"));
+            }
+            return res.status(200).json(new ApiResponse(200, user, "User retrieved successfully"));
+        } catch (err) {
+            console.error("Error decoding token:", err.message);
+            return res.status(401).json(new ApiResponse(401, null, "Unauthorized: Invalid token"));
+        }
     } catch (error) {
-        res.status(500).json(new ApiResponse(500, null, error.message))
+        return res.status(500).json(new ApiResponse(500, null, "Internal Server Error"));
     }
-}
+};
+
 
 export const ForgetPasswordHandler = async (req, res) => {
     try {

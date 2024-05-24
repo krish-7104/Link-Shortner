@@ -7,6 +7,6 @@ router.post("/login", LoginHandler)
 router.post("/register", RegisterHandler)
 router.post("/forget-password", ForgetPasswordHandler)
 router.post("/verify-token/:id", UpdatePasswordHandler)
-router.get("/get-user", GetUserHandler)
+router.post("/get-user", GetUserHandler)
 
 export default router

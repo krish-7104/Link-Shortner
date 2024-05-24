@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { LuSendHorizonal } from "react-icons/lu";
+import { UserContext } from "../../context/user-context";
+import axios from "axios";
+import { BACKEND_LINK } from "../../utils/base-api.js";
 
 const Home = () => {
   const [link, setLink] = useState("");
+  const { user } = useContext(UserContext);
 
   const LinkVerify = (link) => {
     return link.startsWith("https://") || link.startsWith("http://");
   };
 
-  const ShortLinkGenerator = () => {
+  const ShortLinkGenerator = async () => {
     if (LinkVerify(link)) {
-      //
+      const resp = await axios.post(`${BACKEND_LINK}/link/add-link`, {
+        user: user._id,
+        url: link,
+      });
+      console.log(resp.data);
     } else {
       toast.dismiss();
       toast.error("Enter Valid Link!");
