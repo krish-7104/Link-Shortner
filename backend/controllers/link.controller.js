@@ -19,7 +19,7 @@ export const GetLinkHandler = async (req, res) => {
 export const GetAllLinksHandler = async (req, res) => {
     try {
         const { userId } = req.params;
-        const links = await Link.find({ user: userId });
+        const links = await Link.find({ user: userId }).sort({ createdAt: -1 })
         res.status(200).json(new ApiResponse(200, links, "Links Found!"));
     } catch (error) {
         res.status(500).json(new ApiResponse(500, null, error.message));
@@ -33,8 +33,7 @@ const FetchTiteFromLink = async (link) => {
         const title = $('title').first().text();
         return title;
     } catch (error) {
-        console.error('Error fetching website title:', error);
-        throw new Error('Unable to fetch website title');
+        return null;
     }
 }
 
@@ -51,7 +50,10 @@ const generateUniqueId = () => {
 export const AddLinkHandler = async (req, res) => {
     try {
         const { user, url } = req.body;
-        const title = await FetchTiteFromLink(url)
+        let title = await FetchTiteFromLink(url);
+        if (title === null) {
+            title = "Untitled";
+        }
         const newLink = new Link({ user, url, uniqueId: generateUniqueId(), title, longurl: url });
         await newLink.save();
         res.status(201).json(new ApiResponse(201, newLink, "Link Created!"));
@@ -59,6 +61,7 @@ export const AddLinkHandler = async (req, res) => {
         res.status(500).json(new ApiResponse(500, null, error.message));
     }
 };
+
 
 export const UpdateAnalyticsHandler = async (req, res) => {
     try {

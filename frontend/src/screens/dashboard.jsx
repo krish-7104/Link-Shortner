@@ -6,12 +6,14 @@ import { UserContext } from "../../context/user-context.jsx";
 import LinkCard from "../components/LinkCard.jsx";
 import NoLink from "../assets/nolinks.svg";
 import { useNavigate } from "react-router-dom";
+import { IoAdd } from "react-icons/io5";
 
 const Dashboard = () => {
   const [data, setData] = useState();
   const { user } = useContext(UserContext);
   const [flag, setFlag] = useState();
   const navigate = useNavigate();
+
   const GetAllLinks = async () => {
     try {
       const resp = await axios.get(
@@ -23,32 +25,41 @@ const Dashboard = () => {
       console.log("Error Getting Links");
       toast.dismiss();
       console.log(error);
-      if (error.response) toast.error("Error in Loading Links");
     }
   };
 
   useEffect(() => {
     GetAllLinks();
-  }, [flag]);
+  }, [user, flag]);
 
   return (
-    <section className="h-screen w-full flex justify-start mt-36 items-center flex-col max-w-6xl">
+    <section className="h-screen w-full flex justify-start pt-32 items-center flex-col max-w-6xl overflow-hidden">
       {data && data.length !== 0 && (
         <p className="mb-6 text-2xl font-semibold text-white">Your Links</p>
       )}
-      {data &&
-        data.length !== 0 &&
-        data.map((item) => {
-          return (
-            <LinkCard
-              key={item._id}
-              uniqueId={item.uniqueId}
-              longurl={item.longurl}
-              clicks={item.clicks}
-              setFlag={setFlag}
-            />
-          );
-        })}
+      <div className="w-full overflow-y-auto pb-4">
+        {data &&
+          data.length !== 0 &&
+          data.map((item) => {
+            return (
+              <LinkCard
+                key={item._id}
+                uniqueId={item.uniqueId}
+                longurl={item.longurl}
+                clicks={item.clicks}
+                setFlag={setFlag}
+              />
+            );
+          })}
+      </div>
+      {data && data.length !== 0 && (
+        <button
+          className="p-3 bg-emerald-500 rounded-full fixed bottom-10 right-10 hover:bg-emerald-600"
+          onClick={() => navigate("/")}
+        >
+          <IoAdd size={24} />
+        </button>
+      )}
       {data && data.length === 0 && (
         <div>
           <img src={NoLink} height={200} width={200} />

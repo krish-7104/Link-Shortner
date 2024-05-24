@@ -6,8 +6,8 @@ import Register from "./screens/register";
 import ForgetPassword from "./screens/forget-password";
 import UpdatePassword from "./screens/update-password";
 import Dashboard from "./screens/dashboard";
-import Link from "./screens/link";
 import Layout from "./Layout";
+import LinkPreview from "./screens/link";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -40,7 +40,7 @@ const App = () => {
         },
         {
           path: "/:id",
-          element: <Link />,
+          element: <LinkPreview />,
         },
       ],
     },

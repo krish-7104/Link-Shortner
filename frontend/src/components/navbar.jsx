@@ -15,6 +15,13 @@ const Navbar = () => {
         <IoUnlink size={30} className="mr-3" />
         Linkify
       </Link>
+      <p className="text-emerald-500 font-medium px-3 py-2 rounded-lg">
+        {location.pathname.includes("/login") && "Login"}
+        {location.pathname.includes("/register") && "Register"}
+        {location.pathname.includes("/forget-password") && "Forget Password"}
+        {location.pathname.includes("/verify-token") && "Update Password"}
+        {location.pathname.includes("/dashboard") && "Dashboard"}
+      </p>
       {user &&
         !user.email &&
         location.pathname !== "/login" &&
@@ -26,13 +33,6 @@ const Navbar = () => {
             Login
           </Link>
         )}
-      <p className="text-emerald-500 font-medium px-3 py-2 rounded-lg">
-        {location.pathname.includes("/login") && "Login"}
-        {location.pathname.includes("/register") && "Register"}
-        {location.pathname.includes("/forget-password") && "Forget Password"}
-        {location.pathname.includes("/verify-token") && "Update Password"}
-        {location.pathname.includes("/dashboard") && "Dashboard"}
-      </p>
       {user && user.email && location.pathname !== "/dashboard" && (
         <Link
           to={"/dashboard"}

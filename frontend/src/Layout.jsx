@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./components/navbar";
 import { Toaster } from "react-hot-toast";
 import { UserContext } from "../context/user-context";
@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 
 const Layout = () => {
   const { user, setUser } = useContext(UserContext);
+  const location = useLocation();
 
   useEffect(() => {
     const GetUser = async () => {
@@ -21,11 +22,20 @@ const Layout = () => {
       setUser(resp.data.data);
     };
     GetUser();
-  }, []);
+  }, [location]);
+
+  const showNavbar = () => {
+    if (location.pathname.includes("/login")) return true;
+    if (location.pathname.includes("/register")) return true;
+    if (location.pathname.includes("/dashboard")) return true;
+    if (location.pathname.includes("/forget-passwords")) return true;
+    if (location.pathname.includes("/verify-token")) return true;
+    if (location.pathname === "/") return true;
+  };
 
   return (
     <>
-      <Navbar />
+      {showNavbar() && <Navbar />}
       <Outlet />
       <Toaster position="bottom-right" />
     </>

@@ -23,7 +23,7 @@ const LinkCard = ({ uniqueId, longurl, clicks, setFlag }) => {
     }
   };
   return (
-    <div className="w-[90%] mx-auto flex justify-between items-center border p-4 rounded-lg">
+    <div className="w-[90%] mx-auto flex justify-between items-center border p-4 rounded-lg mb-4">
       <div className="flex flex-col">
         <Link
           target="_blank"
