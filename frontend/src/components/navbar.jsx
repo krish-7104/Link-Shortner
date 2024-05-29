@@ -41,7 +41,7 @@ const Navbar = () => {
         <IoUnlink size={30} className="mr-3" />
         Linkify
       </Link>
-      {!user &&
+      {!user?.email &&
         location.pathname !== "/login" &&
         location.pathname !== "/register" && (
           <Link
@@ -51,7 +51,7 @@ const Navbar = () => {
             Login
           </Link>
         )}
-      {user && location.pathname !== "/dashboard" && (
+      {user && user.email && location.pathname !== "/dashboard" && (
         <Link
           to="/dashboard"
           className="bg-emerald-500 text-[#191924] font-medium px-3 py-2 rounded-lg"

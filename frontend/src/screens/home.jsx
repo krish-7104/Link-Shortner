@@ -6,18 +6,23 @@ import axios from "axios";
 import { BACKEND_LINK } from "../../utils/base-api.js";
 import { IoClose } from "react-icons/io5";
 import { MdNavigateNext } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [link, setLink] = useState("");
   const [response, setResponse] = useState();
   const { user } = useContext(UserContext);
-
+  const navigate = useNavigate();
   const LinkVerify = (link) => {
     return link?.startsWith("https://") || link?.startsWith("http://");
   };
 
   const ShortLinkGenerator = async () => {
+    if (!user?.email) {
+      navigate("/login");
+      toast.error("Login First!");
+      return;
+    }
     toast.loading("Shorting the URL..");
     if (LinkVerify(link)) {
       const resp = await axios.post(`${BACKEND_LINK}/link/add-link`, {

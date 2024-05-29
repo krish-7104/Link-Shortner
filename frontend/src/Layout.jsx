@@ -13,15 +13,23 @@ const Layout = () => {
 
   useEffect(() => {
     const GetUser = async () => {
-      const token = Cookies.get("token");
-      const resp = await axios.post(
-        `${BACKEND_LINK}/auth/get-user`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setUser(resp.data.data);
+      try {
+        const token = Cookies.get("token");
+        const resp = await axios.post(
+          `${BACKEND_LINK}/auth/get-user`,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setUser(resp.data.data);
+      } catch (error) {
+        //
+      }
     };
-    GetUser();
+    !location.pathname?.includes("/login") &&
+      !location.pathname?.includes("/register") &&
+      !location.pathname?.includes("/forget-password") &&
+      !location.pathname?.includes("/verify-token") &&
+      GetUser();
   }, [location]);
 
   const showNavbar = () => {
