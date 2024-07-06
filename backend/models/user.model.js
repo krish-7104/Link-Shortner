@@ -14,10 +14,6 @@ const UserSchema = new Schema({
         required: [true, "Password is required!"],
         minlength: 6,
     },
-    name: {
-        type: String,
-        required: [true, "Name is required!"],
-    },
 }, { timestamps: true })
 
 UserSchema.pre("save", async function (next) {
