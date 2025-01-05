@@ -8,14 +8,14 @@ import { BACKEND_LINK } from "../../utils/base-api";
 const LinkCard = ({ uniqueId, longurl, clicks, setFlag }) => {
   const deleteHandler = async () => {
     const isConfirmed = window.confirm(
-      "Are you sure you want to delete this link?"
+      "Are you sure you want to delete this link?",
     );
     if (!isConfirmed) return;
 
     try {
       toast.loading("Deleting..");
       const resp = await axios.delete(
-        `${BACKEND_LINK}/link/delete-link/${uniqueId}`
+        `${BACKEND_LINK}/link/delete-link/${uniqueId}`,
       );
       toast.dismiss();
       toast.success(resp.data.message);
@@ -30,7 +30,7 @@ const LinkCard = ({ uniqueId, longurl, clicks, setFlag }) => {
 
   return (
     <div className="w-[90%] mx-auto flex justify-between items-center border p-4 rounded-lg mb-4">
-      <div className="flex flex-col">
+      <div className="flex flex-col w-[85%]">
         <Link
           target="_blank"
           to={import.meta.env.VITE_FRONTEND_LINK + "/" + uniqueId}
@@ -41,16 +41,15 @@ const LinkCard = ({ uniqueId, longurl, clicks, setFlag }) => {
         <Link
           to={longurl}
           target="_blank"
-          className="text-white/50 text-sm mt-1 group cursor-pointer"
+          className="text-white/50 text-sm mt-1 group cursor-pointer line-clamp-2"
         >
-          Long Url:{" "}
           <span className="group-hover:border-b group-hover:border-b-white/50">
             {longurl}
           </span>
         </Link>
       </div>
-      <div className="flex">
-        <div className="flex justify-center flex-col items-end text-white mr-6">
+      <div className="flex w-[15%]">
+        <div className="flex justify-center flex-col items-center text-white mr-6">
           <p className="text-sm text-white/50">Clicks</p>
           <p className="text-xl">{clicks}</p>
         </div>

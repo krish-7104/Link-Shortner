@@ -5,7 +5,6 @@ import { Toaster } from "react-hot-toast";
 import { UserContext } from "../context/user-context";
 import axios from "axios";
 import { BACKEND_LINK } from "../utils/base-api";
-import Cookies from "js-cookie";
 
 const Layout = () => {
   const { user, setUser } = useContext(UserContext);
@@ -14,11 +13,11 @@ const Layout = () => {
   useEffect(() => {
     const GetUser = async () => {
       try {
-        const token = Cookies.get("token");
+        const token = localStorage.getItem("token");
         const resp = await axios.post(
           `${BACKEND_LINK}/auth/get-user`,
           {},
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { Authorization: `Bearer ${token}` } },
         );
         setUser(resp.data.data);
       } catch (error) {

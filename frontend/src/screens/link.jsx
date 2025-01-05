@@ -14,7 +14,7 @@ const LinkPreview = () => {
     const GetLinkData = async () => {
       try {
         const resp = await axios.get(
-          `${BACKEND_LINK}/link/get-link/${params.id}`
+          `${BACKEND_LINK}/link/get-link/${params.id}`,
         );
         UpdateAnalytics();
         setFound(true);
@@ -28,8 +28,9 @@ const LinkPreview = () => {
     const UpdateAnalytics = async () => {
       try {
         const resp = await axios.patch(
-          `${BACKEND_LINK}/link/update-click/${params.id}`
+          `${BACKEND_LINK}/link/update-click/${params.id}`,
         );
+
         window.open(resp.data.data.longurl, "_self");
       } catch (error) {
         console.log(error);

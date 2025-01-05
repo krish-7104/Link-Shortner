@@ -1,13 +1,20 @@
-import express from "express"
-import { AddLinkHandler, DeleteLinkHandler, GetAllLinksHandler, GetLinkHandler, UpdateAnalyticsHandler } from "../controllers/link.controller.js"
+import express from "express";
+import {
+  AddLinkHandler,
+  DeleteLinkHandler,
+  GetAllLinksHandler,
+  GetLinkHandler,
+  UpdateAnalyticsHandler,
+} from "../controllers/link.controller.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get("/get-link/:uniqueId", GetLinkHandler)
-router.get("/get-links/:userId", GetAllLinksHandler)
-router.post("/add-link", AddLinkHandler)
-router.patch("/update-click/:uniqueId", UpdateAnalyticsHandler)
-router.delete("/delete-link/:uniqueId", DeleteLinkHandler)
+router.post("/add-link", AddLinkHandler);
+router.get("/get-links/:userId", GetAllLinksHandler);
 
+router.get("/get-link/:uniqueId", GetLinkHandler);
 
-export default router
+router.patch("/update-click/:uniqueId", UpdateAnalyticsHandler);
+router.delete("/delete-link/:uniqueId", DeleteLinkHandler);
+
+export default router;

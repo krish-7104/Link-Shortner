@@ -22,6 +22,7 @@ const Login = () => {
       });
       toast.dismiss();
       toast.success(resp.data.message);
+      localStorage.setItem("token", resp.data.data.token);
       setUser(resp.data.data);
       navigate("/");
     } catch (error) {

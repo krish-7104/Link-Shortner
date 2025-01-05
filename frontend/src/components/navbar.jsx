@@ -12,24 +12,10 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const LogoutHandler = async () => {
-    toast.loading("Processing...");
-    try {
-      const resp = await axios.post(
-        `${BACKEND_LINK}/auth/logout`,
-        {},
-        {
-          withCredentials: true,
-        }
-      );
-      toast.dismiss();
-      toast.success(resp.data.message);
-      setUser(null);
-      navigate("/");
-    } catch (error) {
-      toast.dismiss();
-      toast.error("Logout failed. Please try again.");
-      console.error("Logout Error:", error);
-    }
+    setUser(null);
+    localStorage.removeItem("token");
+    navigate("/");
+    toast.success("Logged Out Successfully!");
   };
 
   return (
